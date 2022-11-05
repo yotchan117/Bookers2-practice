@@ -7,6 +7,21 @@
       <%= render 'books/form', book: @book %>
     </div>
     <div class='col-md-8 offset-md-1'>
+      <% unless @user.id == current_user.id %>
+      <h2>Chat</h2>
+        <% if (current_user.following?(@user)) && (@user.following?(current_user)) %>
+          <% if @isRoom == true %>
+            <p class="user-show-room"><a href="/rooms/<%= @roomId %>" class="btn btn-primary btn-lg">チャットへ</a></p>
+          <% else %>
+            <%= form_for @room do |f| %>
+              <%= fields_for @entry do |e| %>
+                <%= e.hidden_field :user_id, value: @user.id %>
+              <% end %>
+              <%= f.submit "チャットを始める", class: "btn btn-primary btn-lg user-show-chat" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
     </div>
