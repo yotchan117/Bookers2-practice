@@ -24,6 +24,21 @@
             <%= render "book_comments/counter", book: @book %>
           </td>
           <td>閲覧数: <%= @book.impressions_count %></td>
+
+          <td>
+            <div id="star-rate<%= @book.id %>"></div>
+            <script>
+              elem = document.querySelector('#star-rate<%= @book.id %>');
+              opt = {
+                size     : 36,
+                starOff:  '<%= asset_path('star-off.png') %>',
+                starOn : '<%= asset_path('star-on.png') %>',
+                readOnly: true
+              };
+              raty(elem, opt);
+            </script>
+          </td>
+
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
