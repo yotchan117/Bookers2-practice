@@ -8,6 +8,9 @@ class Book < ApplicationRecord
 
   has_many :view_counts, dependent: :destroy
 
+  scope :latest, -> {order(created_at: :desc)}
+  scope :star_count, -> {order(rate: :desc)}
+
   def favorited_by?(user)
     favorites.where(user_id: user.id).exists?
   end
